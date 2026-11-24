@@ -64,7 +64,7 @@ export async function handle(request: Request, deps: GatewayDeps): Promise<Respo
         resource: "Access granted. This is the protected demo resource.",
       }, 200);
     }
-    const status = statusFor(result.reason);
+    const status = statusFor(result.reason, result.retryable);
     const headers: Record<string, string> = status === 503 && result.retryable ? { "retry-after": String(Math.max(1, deps.failureTtlMs / 1000)) } : {};
     return json({ ...base, ...(result.detail ? { detail: result.detail } : {}) }, status, headers);
   }
@@ -81,7 +81,8 @@ export async function handle(request: Request, deps: GatewayDeps): Promise<Respo
   return json({ error: "no_route" }, 404);
 }
 
-function statusFor(reason: string | null): number {
+// 401: bad request credential. 503: transient, try again. 403: policy says no.
+function statusFor(reason: string | null, retryable: boolean): number {
   switch (reason) {
     case "invalid_token":
       return 401;
@@ -90,7 +91,7 @@ function statusFor(reason: string | null): number {
     case "audit_unavailable":
       return 503;
     case "card_unreachable":
-      return 503;
+      return retryable ? 503 : 403; // host down: retry; card URL 404: permanent
     default:
       return 403;
   }

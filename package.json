@@ -7,6 +7,7 @@
     "dev": "wrangler dev",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
+    "build": "wrangler deploy --dry-run --outdir dist",
     "probe": "tsx scripts/probe.ts"
   },
   "dependencies": {
