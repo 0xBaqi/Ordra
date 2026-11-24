@@ -1,0 +1,9 @@
+# Copy to .dev.vars for local overrides. Never commit .dev.vars.
+# Slice 1 needs NO secrets. Every value below is optional and non-secret;
+# defaults live in wrangler.toml [vars].
+# NETWORK=testnet
+# REGISTRY_CONTRACT=12802,0
+# REGISTRY_URL=https://agent-registry-mcp.concordium.com
+# CACHE_TTL_SECONDS=60
+# FAILURE_CACHE_TTL_SECONDS=5
+# REGISTRY_TIMEOUT_MS=10000
