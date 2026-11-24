@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-11-24T10:48:41.299Z",
+  "source": "https://agent-registry-mcp.concordium.com/mcp",
+  "request": {
+    "name": "check_badge",
+    "arguments": {
+      "id": "KLLYYkKhESVcDPjy7nGZh",
+      "network": "testnet"
+    }
+  },
+  "http_status": 200,
+  "response": {
+    "jsonrpc": "2.0",
+    "id": 20,
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"token_address\": \"KLLYYkKhESVcDPjy7nGZh\",\n  \"badge_valid\": false,\n  \"checks\": {\n    \"contract_is_registry\": false\n  },\n  \"issues\": [\n    {\n      \"severity\": \"error\",\n      \"field\": \"token_address\",\n      \"message\": \"badge names a CIS-8004 registry that is not configured on this service — cannot verify against it\",\n      \"actual\": \"9999,0\"\n    }\n  ]\n}"
+        }
+      ],
+      "isError": false
+    }
+  }
+}

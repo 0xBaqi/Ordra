@@ -93,17 +93,57 @@ Full key order seen: `on_chain_agent_found`, `status_active`, `has_agent_uri`,
 `contracts_match`, `verify_present`, `extension_conformant`,
 `verification_present`, `verify_url_matches`.
 
-Recorded fixtures (all `isError:false`, HTTP 200):
+Recorded fixtures (all JSON-RPC `isError:false`, HTTP 200), re-recorded 2026-11-24:
 
-| Fixture | Token | What the registry said |
-|---|---|---|
-| `valid` | 1449 | all checks true, `badge_valid:true` |
-| `not_found` | 999999 (well-formed address, no record) | `checks:{on_chain_agent_found:false}` |
-| `revoked` | 15 | `status_active:false`, also card 404, hash false, badge false |
-| `no_agent_uri` | 1468 | Active, `has_agent_uri:false`, checks stop there |
-| `hash_mismatch` | 1455 | card fetched, `hash_matches_on_chain:false`, badge present |
-| `badge_missing` | 1450 | card fetched, **hash also false**, `badge_present:false` |
-| `badge_token_mismatch` | 1453 | hash true, badge well-formed, but badge's `tokenAddress` is another agent's (`token_address_matches:false`) |
+| Fixture | Token | What the registry said | Ordra reason |
+|---|---|---|---|
+| `valid` | 1449 | all checks true, `badge_valid:true` | allow |
+| `not_found` | 999999 (well-formed, no record) | `checks:{on_chain_agent_found:false}` | `not_found` |
+| `revoked` | 15 | `status_active:false` (card also 404) | `revoked` |
+| `no_agent_uri` | 1468 | `has_agent_uri:false`, checks stop | `card_missing` |
+| `card_host_down` | 1191 | `card_fetched:false`, `http_status:null`, issue "could not fetch card: … error sending request" | `card_unreachable` (retryable) |
+| `card_http_404` | 1184 | `card_fetched:false`, `http_status:404`, later checks still run (all false) | `card_unreachable` (not retryable) |
+| `hash_mismatch` | 1455 | card fetched, `hash_matches_on_chain:false` | `hash_mismatch` |
+| `badge_missing` | 1231 | hash true, `badge_present:false` | `badge_missing` |
+| `badge_missing_and_hash` | 1450 | no badge **and** hash false | `hash_mismatch` (root-cause order) |
+| `badge_token_mismatch` | 1453 | hash true, badge names another agent's token | `badge_invalid` |
+| `mainnet_badge` | mainnet 10082 / token 1, sent with `network:"testnet"` | evaluated **on mainnet** (`network:"mainnet"`) | `untrusted_registry` |
+| `unconfigured_contract` | contract 9999 / token 1 | different shape: `{token_address, badge_valid:false, checks:{contract_is_registry:false}, issues}`, no `network` | `untrusted_registry` |
+
+### 5a. `network` does not pin the network for `check_badge` [verified]
+
+A mainnet badge sent with `network:"testnet"` was evaluated against mainnet,
+and the response said `network:"mainnet"`. The contract index inside the token
+address wins. **A gateway that trusts `check_badge` alone would accept mainnet
+agents on a testnet deployment (and the reverse).** Ordra therefore checks
+`response.network` and `response.expected.contracts.cis8004` against its own
+config and denies on mismatch.
+
+### 5b. Does `badge_valid` include a verified identity of the owner? **No.**
+
+- The badge's `verification` block is just pointers (`service`, `verifyUrl`,
+  `mcp`, `docs`). The docs call them "Verification hints … the optional
+  verification block names where to run them" and "Any issuer may point these"
+  elsewhere. It is not an attestation. `verification_present` only checks that
+  the block exists [verified in docs and in `get_badge_json` output].
+- What a passing badge proves, quoting the badge docs: *"the agent is registered
+  in the Agent Registry, is currently active, is owned by an accountable
+  Concordium account, and that its published card is exactly the one committed
+  on-chain."* So "Verified by Concordium" means "verified on-chain registration",
+  not "verified human/company".
+- Nothing in the 41 registry tools returns identity attributes or an identity
+  proof for the owner [verified against `tools/list`]. Closest fields:
+  `on_chain.owner_account` and `checks.owner_matches`.
+- **[unverified, from general Concordium knowledge, not from these docs]**
+  Every Concordium account is opened from an identity issued by an identity
+  provider, which is what "accountable" refers to. Proving specific attributes
+  (e.g. country, over-18, company) needs Concordium ID / Web3 ID
+  zero-knowledge proofs presented by the owner's wallet. That is outside the
+  registry and can't be done from a header-only gateway.
+- Also from the docs: *"a badge qualifies as a Verified by Concordium badge
+  whenever its contract implements"* CIS-8004, and verifiers must *"Confirm the
+  contract … is a registry your application trusts."* Hence the trusted-contract
+  check above.
 
 ## 6. Errors seen
 
@@ -128,7 +168,7 @@ Recorded fixtures (all `isError:false`, HTTP 200):
 | `check_badge` takes "token address or account" | Correct; the param is named `id` |
 | 429 + Retry-After | Not observed; limit unknown |
 | `is_active` etc. by token | They take `token_id`, not a token address |
+| Testnet selected by `network` | True for most tools; **not** for `check_badge`, where the token's contract decides (5a) |
+| Badge = verified identity | No: verified on-chain registration + card integrity only (5b) |
 
-No contradiction serious enough to block slice 1. **Two policy questions do
-need your decision** (see PR description): what to do with
-`badge_token_mismatch` and `no_agent_uri`, which don't fit the five reason codes.
+Policy decisions were made by the owner on 2026-11-24 (see README "Policy").

@@ -25,17 +25,22 @@ async function rpc(method: string, params?: unknown) {
 
 const call = (name: string, args: Record<string, unknown> = {}) => rpc("tools/call", { name, arguments: args });
 
-// Real testnet badge token addresses (CIS-8004 contract 12802,0), chosen on
-// 2026-11-24 because each one exercises a different policy outcome.
-// The card-dependent outcomes can change if the owner edits their card.
+// Real badge token addresses chosen on 2026-11-24, one per policy outcome.
+// All are on the testnet CIS-8004 contract 12802,0 unless noted.
+// Card-dependent outcomes can change if an owner edits or re-hosts their card.
 const FIXTURE_TOKENS: Record<string, string> = {
-  valid: "JyP9X5PpNatg3zfjCcn3S",                  // token 1449: all checks pass
-  revoked: "JyP9UApR1fgJJL79x1xQT",                // token 15: status Revoked
-  not_found: "JyP9V5dupAgxNyUmSS4CG",              // token 999999: valid address, no record
-  hash_mismatch: "JyP9XBxhxjtF2k6M7i4x7",          // token 1455: badge present, card hash != on-chain
-  badge_missing: "JyP9X6VJJcPbt7uVQR95v",          // token 1450: card has no Concordium badge
-  no_agent_uri: "JyP9XSBy55NJpNBVtfGbb",           // token 1468: no card URL on chain
-  badge_token_mismatch: "JyP9X9mk6gtPNVckgzyhx",   // token 1453: hash ok, badge names another token
+  valid: "JyP9X5PpNatg3zfjCcn3S",                 // token 1449: every check passes
+  not_found: "JyP9V5dupAgxNyUmSS4CG",             // token 999999: well-formed address, no record
+  revoked: "JyP9UApR1fgJJL79x1xQT",               // token 15: status Revoked
+  no_agent_uri: "JyP9XSBy55NJpNBVtfGbb",          // token 1468: no card URL on chain
+  card_host_down: "JyP9X3Cc8M1jCTQ4yUnR2",        // token 1191: card host does not answer
+  card_http_404: "JyP9WuYEcAXEPajbuJtVX",         // token 1184: card URL returns 404
+  hash_mismatch: "JyP9XBxhxjtF2k6M7i4x7",         // token 1455: card fetched, hash differs
+  badge_missing: "JyP9XnysPNxrPSuLa2vVi",         // token 1231: hash ok, card has no badge
+  badge_missing_and_hash: "JyP9X6VJJcPbt7uVQR95v",// token 1450: no badge AND hash differs
+  badge_token_mismatch: "JyP9X9mk6gtPNVckgzyhx",  // token 1453: hash ok, badge names another token
+  mainnet_badge: "Mf22oWt8BKonzdwrwFqCM",         // MAINNET contract 10082 token 1, sent with network:testnet
+  unconfigured_contract: "KLLYYkKhESVcDPjy7nGZh", // contract 9999 token 1: not a registry the service knows
 };
 
 async function main() {
