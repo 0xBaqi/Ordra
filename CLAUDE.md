@@ -38,4 +38,21 @@ Built for the Concordium Trusted Agents Hackathon (deadline 2026-12-09 23:59 UTC
   `result.content[0].text`. Has `checks{}` (short-circuits), `badge_valid`, `issues[]`.
   It fetches the off-chain agent card live, so results depend on card host uptime.
 - `is_active`, `get_agent_wallet`, `verify_agent_card` take `token_id`, not a token address.
+- `check_badge` ignores `network` when the token belongs to another network's registry.
+  Always check `response.network` and `expected.contracts.cis8004` against config.
+- The badge's `verification` block is pointers, not an identity attestation. No registry
+  tool returns owner identity attributes.
 - x402 settlement on Concordium testnet: unverified. Don't build it yet.
+
+## Policy (owner-approved 2026-11-24)
+
+Reason code = first root cause, in this order: untrusted_registry, not_found, revoked,
+card_missing, card_unreachable, hash_mismatch, badge_missing, badge_invalid.
+Plus invalid_token (bad header), registry_unavailable, registry_malformed (schema failure),
+audit_unavailable. card_unreachable: retry once if the host didn't answer; never cache
+failures longer than 5 s. Store the full check_badge issues list in every audit record.
+Changing the policy means bumping POLICY_VERSION in src/policy.ts.
+
+## Commands
+
+`npm test` (offline) · `npm run typecheck` · `npm run build` (dry-run bundle) · `npm run dev`
