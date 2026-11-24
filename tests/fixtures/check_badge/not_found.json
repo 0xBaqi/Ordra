@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-11-24T10:48:39.680Z",
+  "source": "https://agent-registry-mcp.concordium.com/mcp",
+  "request": {
+    "name": "check_badge",
+    "arguments": {
+      "id": "JyP9V5dupAgxNyUmSS4CG",
+      "network": "testnet"
+    }
+  },
+  "http_status": 200,
+  "response": {
+    "jsonrpc": "2.0",
+    "id": 10,
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"token_id\": 999999,\n  \"token_address\": \"JyP9V5dupAgxNyUmSS4CG\",\n  \"agent_uri\": null,\n  \"http_status\": null,\n  \"card_sha256\": null,\n  \"on_chain\": null,\n  \"checks\": {\n    \"on_chain_agent_found\": false\n  },\n  \"badge_valid\": false,\n  \"issues\": [\n    {\n      \"severity\": \"error\",\n      \"field\": \"on_chain\",\n      \"message\": \"no CIS-8004 record found for this token\"\n    }\n  ],\n  \"network\": \"testnet\",\n  \"expected\": {\n    \"chain\": \"ccd:4221332d34e1694168c2a0c0b3fd0f27\",\n    \"contracts\": {\n      \"cis8004\": \"12802,0\",\n      \"cis8\": \"12801,0\"\n    }\n  }\n}"
+        }
+      ],
+      "isError": false
+    }
+  }
+}

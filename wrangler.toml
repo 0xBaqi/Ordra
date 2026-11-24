@@ -1,0 +1,20 @@
+name = "ordra"
+main = "src/index.ts"
+compatibility_date = "2026-11-01"
+
+# Non-secret config. Ordra has no secrets in slice 1.
+[vars]
+REGISTRY_URL = "https://agent-registry-mcp.concordium.com"
+NETWORK = "testnet"
+REGISTRY_CONTRACT = "12802,0"     # testnet CIS-8004 Agent Registry (verified 2026-11-24)
+CACHE_TTL_SECONDS = "60"
+FAILURE_CACHE_TTL_SECONDS = "5"   # capped at 5 in code
+REGISTRY_TIMEOUT_MS = "10000"
+AUDIT_RETENTION_SECONDS = "0"     # 0 = keep forever
+
+# Audit log. KV namespace "ordra-audit". A namespace id is an identifier,
+# not a credential: it is useless without a Cloudflare API token for this account.
+# `wrangler dev` uses a local simulated copy, not this namespace.
+[[kv_namespaces]]
+binding = "AUDIT"
+id = "f1e53faecaec44c8a991fe46448cee7c"

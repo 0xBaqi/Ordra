@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-11-24T10:48:41.185Z",
+  "source": "https://agent-registry-mcp.concordium.com/mcp",
+  "request": {
+    "name": "check_badge",
+    "arguments": {
+      "id": "Mf22oWt8BKonzdwrwFqCM",
+      "network": "testnet"
+    }
+  },
+  "http_status": 200,
+  "response": {
+    "jsonrpc": "2.0",
+    "id": 19,
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"token_id\": 1,\n  \"token_address\": \"Mf22oWt8BKonzdwrwFqCM\",\n  \"agent_uri\": \"https://tippingservice.co.uk/agents/quiet_ledger_63/.well-known/agent-card.json\",\n  \"http_status\": 404,\n  \"card_sha256\": \"02e5e21b20fa7d11728ee897e357554d35c45a3decd25f1eeaad398273f5e5aa\",\n  \"on_chain\": {\n    \"owner_account\": \"4q9iPQegyqqjUp2hNTv3EriR4ErXaeYVLkWac9io5wZQJgHY79\",\n    \"status\": \"Active\",\n    \"agent_uri\": \"https://tippingservice.co.uk/agents/quiet_ledger_63/.well-known/agent-card.json\",\n    \"metadata_hash_hex\": \"4c165fc50d59d43af6b9d034fb60d1bba9ddda27caa65faa0a4eea514db3ef6e\"\n  },\n  \"checks\": {\n    \"on_chain_agent_found\": true,\n    \"status_active\": true,\n    \"has_agent_uri\": true,\n    \"card_fetched\": false,\n    \"hash_matches_on_chain\": false,\n    \"badge_present\": false,\n    \"badge_well_formed\": false\n  },\n  \"badge_valid\": false,\n  \"issues\": [\n    {\n      \"severity\": \"error\",\n      \"field\": \"card_fetch\",\n      \"message\": \"card URL did not return HTTP 200\",\n      \"expected\": \"200\",\n      \"actual\": \"404\"\n    },\n    {\n      \"severity\": \"error\",\n      \"field\": \"metadata_hash\",\n      \"message\": \"card SHA-256 does not match the on-chain metadata_hash\",\n      \"expected\": \"4c165fc50d59d43af6b9d034fb60d1bba9ddda27caa65faa0a4eea514db3ef6e\",\n      \"actual\": \"02e5e21b20fa7d11728ee897e357554d35c45a3decd25f1eeaad398273f5e5aa\"\n    },\n    {\n      \"severity\": \"error\",\n      \"field\": \"badge\",\n      \"message\": \"card carries no Concordium badge — neither the A2A extension (capabilities.extensions[uri=…/concordium-badge/v1]) nor a legacy top-level `concordium` block\",\n      \"expected\": \"a concordium-badge extension in capabilities.extensions\"\n    },\n    {\n      \"severity\": \"warning\",\n      \"field\": \"network\",\n      \"message\": \"this is a `mainnet` badge; you queried `testnet` — verified against `mainnet`\",\n      \"expected\": \"mainnet\",\n      \"actual\": \"testnet\"\n    }\n  ],\n  \"network\": \"mainnet\",\n  \"queried_network\": \"testnet\",\n  \"expected\": {\n    \"chain\": \"ccd:9dd9ca4d19e9393877d2c44b70f89acb\",\n    \"contracts\": {\n      \"cis8004\": \"10082,0\",\n      \"cis8\": \"10081,0\"\n    }\n  }\n}"
+        }
+      ],
+      "isError": false
+    }
+  }
+}
