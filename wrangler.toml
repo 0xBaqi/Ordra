@@ -18,3 +18,8 @@ AUDIT_RETENTION_SECONDS = "0"     # 0 = keep forever
 [[kv_namespaces]]
 binding = "AUDIT"
 id = "f1e53faecaec44c8a991fe46448cee7c"
+
+# Static agent cards (public/agents/**). Served byte-for-byte before the Worker runs;
+# every other path falls through to the Worker. Hash-checked by tests/cards.test.ts.
+[assets]
+directory = "./public"

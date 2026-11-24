@@ -1,0 +1,4 @@
+{
+  "_comment": "One entry per card in public/agents/. sha256 is the value returned by the registry build_agent_card / build_agent_badge tool for those exact bytes, and the value pinned on-chain. Empty until the first agent is registered.",
+  "cards": []
+}
