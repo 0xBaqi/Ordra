@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-11-24T10:41:05.605Z",
+  "source": "https://agent-registry-mcp.concordium.com/mcp",
+  "request": {
+    "name": "check_badge",
+    "arguments": {
+      "id": "JyP9X9mk6gtPNVckgzyhx",
+      "network": "testnet"
+    }
+  },
+  "http_status": 200,
+  "response": {
+    "jsonrpc": "2.0",
+    "id": 15,
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"token_id\": 1453,\n  \"token_address\": \"JyP9X9mk6gtPNVckgzyhx\",\n  \"agent_uri\": \"https://raw.githubusercontent.com/balojey/tradewizard-concordium/main/docs/agents/tradewizard-agent-card.json\",\n  \"http_status\": 200,\n  \"card_sha256\": \"6f9fe84acdb3ebc969040721b4b148e6628c60c12b34f630014cfabc90f1f9b9\",\n  \"on_chain\": {\n    \"owner_account\": \"43WTW9mXTvFheLNjmsso5hDEJyYTdn8cssFXYDUHruUjqSSpMu\",\n    \"status\": \"Active\",\n    \"agent_uri\": \"https://raw.githubusercontent.com/balojey/tradewizard-concordium/main/docs/agents/tradewizard-agent-card.json\",\n    \"metadata_hash_hex\": \"6f9fe84acdb3ebc969040721b4b148e6628c60c12b34f630014cfabc90f1f9b9\"\n  },\n  \"checks\": {\n    \"on_chain_agent_found\": true,\n    \"status_active\": true,\n    \"has_agent_uri\": true,\n    \"card_fetched\": true,\n    \"hash_matches_on_chain\": true,\n    \"badge_present\": true,\n    \"badge_embedding\": \"extension\",\n    \"badge_well_formed\": true,\n    \"token_address_matches\": false,\n    \"owner_matches\": true,\n    \"contracts_match\": true,\n    \"verify_present\": true,\n    \"extension_conformant\": true,\n    \"verification_present\": true,\n    \"verify_url_matches\": false\n  },\n  \"badge_valid\": false,\n  \"issues\": [\n    {\n      \"severity\": \"error\",\n      \"field\": \"tokenAddress\",\n      \"message\": \"badge short form does not match the on-chain token address\",\n      \"expected\": \"JyP9X9mk6gtPNVckgzyhx\",\n      \"actual\": \"JyP9XfKVsCUMaaEsDtyoS\"\n    },\n    {\n      \"severity\": \"error\",\n      \"field\": \"tokenAddress\",\n      \"message\": \"CAIP-19 token address does not match\",\n      \"expected\": \"ccd:4221332d34e1694168c2a0c0b3fd0f27/cis-2:JyP9X9mk6gtPNVckgzyhx\",\n      \"actual\": \"ccd:4221332d34e1694168c2a0c0b3fd0f27/cis-2:JyP9XfKVsCUMaaEsDtyoS\"\n    },\n    {\n      \"severity\": \"warning\",\n      \"field\": \"verification.verifyUrl\",\n      \"message\": \"verifyUrl resolves a different badge than this card's tokenAddress\",\n      \"expected\": \"JyP9X9mk6gtPNVckgzyhx\",\n      \"actual\": \"JyP9XfKVsCUMaaEsDtyoS\"\n    }\n  ],\n  \"network\": \"testnet\",\n  \"expected\": {\n    \"chain\": \"ccd:4221332d34e1694168c2a0c0b3fd0f27\",\n    \"contracts\": {\n      \"cis8004\": \"12802,0\",\n      \"cis8\": \"12801,0\"\n    }\n  }\n}"
+        }
+      ],
+      "isError": false
+    }
+  }
+}

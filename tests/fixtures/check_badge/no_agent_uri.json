@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-11-24T10:41:05.447Z",
+  "source": "https://agent-registry-mcp.concordium.com/mcp",
+  "request": {
+    "name": "check_badge",
+    "arguments": {
+      "id": "JyP9XSBy55NJpNBVtfGbb",
+      "network": "testnet"
+    }
+  },
+  "http_status": 200,
+  "response": {
+    "jsonrpc": "2.0",
+    "id": 14,
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"token_id\": 1468,\n  \"token_address\": \"JyP9XSBy55NJpNBVtfGbb\",\n  \"agent_uri\": null,\n  \"http_status\": null,\n  \"card_sha256\": null,\n  \"on_chain\": {\n    \"owner_account\": \"4WBJM9RyoYQiwtjB1YxdqJAF1SMVyUao7KjA6fMbQKAUKarpkk\",\n    \"status\": \"Active\",\n    \"agent_uri\": null,\n    \"metadata_hash_hex\": \"d3c16ac371c4066a13157d7a380a12ff04f3b3da4eb307d877644a6b4f78206e\"\n  },\n  \"checks\": {\n    \"on_chain_agent_found\": true,\n    \"status_active\": true,\n    \"has_agent_uri\": false\n  },\n  \"badge_valid\": false,\n  \"issues\": [\n    {\n      \"severity\": \"error\",\n      \"field\": \"agent_uri\",\n      \"message\": \"no agent_uri set on chain — the agent has no card to check\",\n      \"expected\": \"an https URL to the agent card\"\n    }\n  ],\n  \"network\": \"testnet\",\n  \"expected\": {\n    \"chain\": \"ccd:4221332d34e1694168c2a0c0b3fd0f27\",\n    \"contracts\": {\n      \"cis8004\": \"12802,0\",\n      \"cis8\": \"12801,0\"\n    }\n  }\n}"
+        }
+      ],
+      "isError": false
+    }
+  }
+}

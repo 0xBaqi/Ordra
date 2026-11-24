@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-11-24T10:41:04.655Z",
+  "source": "https://agent-registry-mcp.concordium.com/mcp",
+  "request": {
+    "name": "check_badge",
+    "arguments": {
+      "id": "JyP9X5PpNatg3zfjCcn3S",
+      "network": "testnet"
+    }
+  },
+  "http_status": 200,
+  "response": {
+    "jsonrpc": "2.0",
+    "id": 9,
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"token_id\": 1449,\n  \"token_address\": \"JyP9X5PpNatg3zfjCcn3S\",\n  \"agent_uri\": \"https://skillmark-index.onrender.com/agents/hermes/agent-card.json\",\n  \"http_status\": 200,\n  \"card_sha256\": \"f8a56aa1c85d1111e7d11c84b9c4d4622243186b4142f2d709f32b3571165b16\",\n  \"on_chain\": {\n    \"owner_account\": \"4Vrg5rkHN7m2STNTgYAqrxHE1jMAhkeZZ3rfifmtattD9PE5dK\",\n    \"status\": \"Active\",\n    \"agent_uri\": \"https://skillmark-index.onrender.com/agents/hermes/agent-card.json\",\n    \"metadata_hash_hex\": \"f8a56aa1c85d1111e7d11c84b9c4d4622243186b4142f2d709f32b3571165b16\"\n  },\n  \"checks\": {\n    \"on_chain_agent_found\": true,\n    \"status_active\": true,\n    \"has_agent_uri\": true,\n    \"card_fetched\": true,\n    \"hash_matches_on_chain\": true,\n    \"badge_present\": true,\n    \"badge_embedding\": \"extension\",\n    \"badge_well_formed\": true,\n    \"token_address_matches\": true,\n    \"owner_matches\": true,\n    \"contracts_match\": true,\n    \"verify_present\": true,\n    \"extension_conformant\": true,\n    \"verification_present\": true,\n    \"verify_url_matches\": true\n  },\n  \"badge_valid\": true,\n  \"issues\": [],\n  \"network\": \"testnet\",\n  \"expected\": {\n    \"chain\": \"ccd:4221332d34e1694168c2a0c0b3fd0f27\",\n    \"contracts\": {\n      \"cis8004\": \"12802,0\",\n      \"cis8\": \"12801,0\"\n    }\n  }\n}"
+        }
+      ],
+      "isError": false
+    }
+  }
+}
