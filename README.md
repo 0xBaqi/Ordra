@@ -94,7 +94,11 @@ Free-plan KV allows 1,000 writes/day, and every `/protected` request writes one 
 
 ## Honest status
 
-**Works, verified by running (2026-11-24):**
+**Deployed and verified live (2026-11-24)** at `https://ordra.adewaleagboola444.workers.dev` via Workers Builds from `slice-1`:
+allow (token 1449, 200), `revoked`, `untrusted_registry` (mainnet badge), `badge_invalid`, and `invalid_token` all returned
+the expected decision, and each decision appeared in `/audit` from the `ordra-audit` KV namespace with its full issues list.
+
+**Also verified by running (2026-11-24):**
 - 42 offline tests pass (`npm test`); typecheck and wrangler bundle pass.
 - The gateway handler was run under Node against the **live testnet registry** for 12 real tokens. Each produced the expected
   decision: allow, `not_found`, `revoked`, `card_missing`, `card_unreachable` (host down and 404), `hash_mismatch`,
@@ -107,7 +111,11 @@ Free-plan KV allows 1,000 writes/day, and every `/protected` request writes one 
 are synthetic and labelled as such.
 
 **Untested / assumed:**
-- Not yet deployed to Cloudflare. Real KV latency and eventual consistency of `/audit` are untested.
+- Observed in production: two requests for token 1449 hit the 10 s registry timeout (`registry_unavailable`) and passed a
+  minute later. Likely cause (unconfirmed): `check_badge` fetches the agent card live, and that card is on a free host that
+  sleeps. Ordra cannot tell a slow card host from a slow registry. Use an agent whose card host does not sleep for demos.
+- The in-memory cache is per isolate. In production a repeat request often lands on another isolate and calls the registry
+  again, so the cache protects the rate limit less than intended.
 - The registry's real rate limit (no 429 seen in ~150 calls).
 - Fixtures depend on third-party agent cards and can drift if owners change them.
 - `/audit` is public. It contains only public on-chain data, but anyone can read it.
