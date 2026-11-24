@@ -1,0 +1,3 @@
+# Agent card files must be served byte-for-byte. Never let git normalise line endings.
+public/agents/** -text
+cards/manifest.json text eol=lf
