@@ -78,6 +78,20 @@ npm run probe -- --fixtures   # re-record registry fixtures (live network)
 
 No secrets are needed. Config is in `wrangler.toml` `[vars]`; see `.dev.vars.example` for overrides.
 
+## Deploy (Cloudflare Workers Builds, Git integration)
+
+| Setting | Value |
+|---|---|
+| Worker name | `ordra` (must match `name` in `wrangler.toml`) |
+| Production branch | `slice-1` until merged, then `main` (Settings → Build → Branch control) |
+| Build command | `npm test` (a failing test blocks the deploy) |
+| Deploy command | `npx wrangler deploy` |
+| Root directory / Path | empty (repo root) |
+| Variables | none; everything is in `wrangler.toml` `[vars]` |
+
+Audit KV namespace: `ordra-audit` (`f1e53faecaec44c8a991fe46448cee7c`), bound as `AUDIT` in `wrangler.toml`.
+Free-plan KV allows 1,000 writes/day, and every `/protected` request writes one audit record.
+
 ## Honest status
 
 **Works, verified by running (2026-11-24):**
