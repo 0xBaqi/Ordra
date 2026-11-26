@@ -172,3 +172,16 @@ config and denies on mismatch.
 | Badge = verified identity | No: verified on-chain registration + card integrity only (5b) |
 
 Policy decisions were made by the owner on 2026-11-24 (see README "Policy").
+
+## 8. Answers from Concordium (Discord, 2026-11-26)
+
+Reported by the registry team in reply to our questions. **Not independently verified** unless marked.
+
+| Question | Reported answer | Effect on Ordra |
+|---|---|---|
+| Payer wallet → agent lookup | The contract has no index from agent wallet to agent, and several agents may share one wallet. | A wallet can't identify an agent. Ordra keeps keying on the explicit `X-Agent-Token`; don't design anything that infers the agent from a payer wallet. |
+| `check_badge` and `network` | Intended and not silent: the response carries `network: "mainnet"` and a warning; the badge encodes its registry contract, so the network is a fact of the badge. A gateway must check it to reject cross-network badges. | Matches section 5a. **[verified]** the recorded `mainnet_badge` fixture has `network:"mainnet"`, a top-level `queried_network`, and a `severity:"warning"` issue on field `network`. Ordra's existing `response.network` / contract check is the right gate. |
+| What a passing badge proves | Token exists and is Active; owner account controls it (CIS-2 ownership); card at `agent_uri` hashes to the on-chain anchor; the badge in the card names this token/owner. Nothing about who the owner is. | Matches section 5b. Keep the wording "verified agent", never "verified owner". |
+| Owner identity | Every Concordium account descends from an identity-verified account (IDP), and a company identity is a known legal entity, so "registered by an identity-verified account" is checkable. Name/org is attested only if put in an external reference. | **[unverified]** We have not found a registry tool that returns this, and `check_badge` does not. Ordra makes no identity claim beyond "accountable Concordium account". |
+
+Still unanswered: whether x402 settlement works on testnet.
